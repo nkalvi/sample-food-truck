@@ -67,6 +67,13 @@ struct TruckView: View {
                 DonutGallery(model: model)
             }
         }
+        // .navigationDestination in OrderView seems be unreachable in .compact view
+        // When tapping on a order row in .compact view logs the following:
+        // A NavigationLink is presenting a value of type “String” but there is no matching navigation destination visible from the location of the link. The link cannot be activated.
+        // Repeating it here seems to solve it
+        .navigationDestination(for: Order.ID.self) { id in
+            OrderDetailView(order: model.orderBinding(for: id))
+        }
     }
 
     // MARK: - Cards
